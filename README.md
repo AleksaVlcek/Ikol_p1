@@ -1,8 +1,8 @@
 # ponkol1_21p1
-Ponovljeni prvi kolokvijum i P1 2021. god ETF SI
+
+Zadatak sa ponovljenog prvog kolokvijuma iz Programiranja 1 2021. godine.
 ---
-Zadatak sa ponovljenog prvog kolokvijuma iz Programiranja 1 2021. godine.\
----
+
 Tekst zadatka:\
 \
 Napisati program na simboličkom mašinskom jeziku za picoComputer koji pronalazi broj zajedničkih
@@ -17,5 +17,6 @@ kao zaseban potprogram.\
 Primer ulaza:\
 6\
 1 6 6 12 9 1\
+\
 Primer izlaza:\
 1 2 4
