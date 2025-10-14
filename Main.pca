@@ -1,0 +1,60 @@
+﻿		n = 1
+		adr_niz1 = 2
+		niz = 1000
+		adr_niz2 = 3
+		i = 4
+		a = 5
+		b = 6
+		t = 7
+		
+		ORG 8 
+		
+		in n
+		mov adr_niz1, #niz
+		in (adr_niz1), n
+		add adr_niz2, adr_niz1, n
+		sub adr_niz2, adr_niz2, 1
+		
+loop:	jsr bzd
+		mov (adr_niz1), b
+		add adr_niz1, adr_niz1, 1
+		sub adr_niz2, adr_niz2, 1
+		bgt adr_niz2, adr_niz1, loop
+		
+		mov adr_niz1, #niz
+		div n, n, 2
+		out (adr_niz1), n
+		
+		stop
+
+
+bzd:	mov a, (adr_niz1)
+		mov b, (adr_niz2)
+		bgt a, b, nzd
+		beq a, b, nzd
+		add a, a, b
+		sub b, a, b
+		sub a, a, b
+		
+nzd:	div t, a, b
+		mul t, t, b
+		sub t, a, t
+		mov a, b
+		mov b, t
+		bgt t, 0, nzd
+		
+		mov b, 1
+		mov i, 2
+		beq a, b, rt
+		beq a, i, jmp
+count:	div t, a, i
+		mul t, t, i
+		bgt a, t, jmp
+		add b, b, 1
+jmp:	add i, i, 1
+		bgt a, i, count
+		add b, b, 1
+		
+rt:		rts
+		
+		
