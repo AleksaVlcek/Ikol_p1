@@ -1,0 +1,54 @@
+﻿N = 1
+adrA = 2
+A = 500
+adrI = 3
+adrJ = 4
+P = 6
+Q = 7
+R = 5
+		
+		ORG 8 
+		
+			mov adrA, #A
+		
+			in N
+			bgt 0, N, end
+			beq 0, N, end
+			
+			mov adrI, #A
+			add adrJ, adrI, 1
+			
+			in (adrA), N
+			
+			add adrA, adrA, N
+			
+	loop:	jsr nzd
+			mov (adrI), P
+			add adrI, adrI, 1
+			add adrJ, adrJ, 1
+			bgt adrA, adrJ, loop
+			
+			sub adrA, adrA, N
+			sub N, N, 1
+			
+			out (adrA), N
+		
+end:	stop
+
+
+nzd:	mov P, (adrI)
+		mov Q, (adrJ)
+		bgt P, Q, loop1
+		add P, P, Q
+		sub Q, P, Q
+		sub P, P, Q
+		
+loop1:	div R, P, Q
+		mul R, R, Q
+		sub R, P, R
+		mov P, Q
+		mov Q, R
+		bgt R, 0, loop1
+		
+rt:		rts
+		
