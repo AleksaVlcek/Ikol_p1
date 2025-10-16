@@ -7,28 +7,28 @@
 		b = 6
 		t = 7
 		
-		ORG 8 
+		ORG 8 							;inicijalizacija programa
 		
-		in n
-		mov adr_niz1, #niz
+		in n				
+		mov adr_niz1, #niz				;primanje ulaza
 		in (adr_niz1), n
 		add adr_niz2, adr_niz1, n
 		sub adr_niz2, adr_niz2, 1
 		
-loop:	jsr bzd
+loop:	jsr bzd							:glavni program/ iteracija kroz niz
 		mov (adr_niz1), b
 		add adr_niz1, adr_niz1, 1
 		sub adr_niz2, adr_niz2, 1
 		bgt adr_niz2, adr_niz1, loop
 		
-		mov adr_niz1, #niz
+		mov adr_niz1, #niz				;ispis
 		div n, n, 2
 		out (adr_niz1), n
 		
 		stop
 
 
-bzd:	mov a, (adr_niz1)
+bzd:	mov a, (adr_niz1)				;potprogram za računanje broja zajedničkih delilaca
 		mov b, (adr_niz2)
 		bgt a, b, nzd
 		beq a, b, nzd
@@ -36,14 +36,14 @@ bzd:	mov a, (adr_niz1)
 		sub b, a, b
 		sub a, a, b
 		
-nzd:	div t, a, b
+nzd:	div t, a, b						;euklidov algoritam za nzd
 		mul t, t, b
 		sub t, a, t
 		mov a, b
 		mov b, t
 		bgt t, 0, nzd
 		
-		mov b, 1
+		mov b, 1						;računanje broja delilaca nzd-a
 		mov i, 2
 		beq a, b, rt
 		beq a, i, jmp
@@ -55,6 +55,7 @@ jmp:	add i, i, 1
 		bgt a, i, count
 		add b, b, 1
 		
-rt:		rts
+rt:		rts								;kraj potprograma
 		
 		
+
