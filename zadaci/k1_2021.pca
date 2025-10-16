@@ -51,4 +51,5 @@ loop1:	div R, P, Q
 		bgt R, 0, loop1
 		
 rt:		rts
+
 		
