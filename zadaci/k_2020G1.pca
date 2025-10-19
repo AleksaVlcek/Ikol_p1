@@ -1,0 +1,56 @@
+﻿		n = 1
+		adra = 2
+		i = 3
+		t = 4
+		adrb = 5
+		p = 6
+		a = 1000
+		b = 2000
+		
+		ORG 8 
+		
+		in n
+		mov adra, #a
+		mov adrb, #b
+		in (adra), n
+		mov i, n
+		
+loop:	jsr arm
+		add adra, adra, 1
+		sub i, i, 1
+		bgt i, 0, loop
+		
+		mov adra, #a
+		out (adra), n
+		
+		stop
+		
+		
+		
+arm:	mov t, (adra)
+
+loop1:	div p, t, 10
+		mul p, p, 10
+		sub (adrb), t, p
+		div t, p, 10
+		add adrb, adrb, 1
+		bgt t, 0, loop1
+		
+		sub p, adrb, 1
+		mov adrb, #b
+		mul t, (adrb), (adrb)
+		mul (adrb), (adrb), t
+		beq adrb, p, chk
+		
+loop2:	mul t, (p), (p)
+		mul t, t, (p)
+		add (adrb), (adrb), t
+		sub p, p, 1
+		bgt p, adrb, loop2
+		
+chk:	mov t, (adra)
+		mov (adra), 1
+		beq t, (adrb), end
+		mov (adra), 0
+
+end:	rts
