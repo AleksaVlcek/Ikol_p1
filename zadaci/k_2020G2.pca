@@ -1,0 +1,44 @@
+﻿		n = 1
+		adra = 2
+		i = 3
+		t = 4
+		res = 5
+		j = 6
+		a = 1000
+		
+		ORG 8 
+		
+		in n
+		mov adra, #a
+		in (adra), n
+		mov i, n
+		
+loop:	jsr sav
+		add adra, adra, 1
+		sub i, i, 1
+		bgt i, 0, loop
+		
+		mov adra, #a
+		out (adra), n
+		
+		stop
+		
+		
+		
+sav:	mov res, 0
+		sub j, (adra), 1
+		beq j, 0, jmp1
+
+loop1:	div t, (adra), j
+		mul t, t, j
+		bgt (adra), t, jmp2
+		add res, res, j
+jmp2:	sub j, j, 1
+		bgt j, 0, loop1
+		
+		mov t, 1
+		beq res, (adra), end
+jmp1:	mov t, 0
+end:	mov (adra), t
+		
+		rts
