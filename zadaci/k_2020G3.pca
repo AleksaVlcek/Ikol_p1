@@ -1,0 +1,54 @@
+﻿;Napisati program na simboličkom mašinskom jeziku za picoComputer koji ispituje da li su celobrojni
+;elementi niza dužine N (gde je 1 ≤ N ≤ 100) automorfni. Automorfni broj ima osobinu da se kvadrat
+;tog broja završava sa originalnim brojem. Program najpre učitava broj N, a zatim i same elemente niza
+;sa standardnog ulaza. Ukoliko se za dužinu niza unese nekorektna vrednost, program treba da korektno
+;završi svoje izvršavanje. Nakon unosa program vrši zahtevanu obradu i na standardnom izlazu ispisuje
+;vrednost 1 (ukoliko je broj automorfni) odnosno vrednost 0 (ukoliko broj nije automorfni). Proveru da
+;li je broj automorfni realizovati kao zaseban potprogram.
+		
+		
+		n = 1
+		adra = 2
+		i = 3
+		t = 4
+		p = 5
+		j = 6
+		a = 1000
+		
+		ORG 8 
+		
+		in n
+		mov adra, #a
+		in (adra), n
+		mov i, n
+		
+loop:	jsr am
+		mov (adra), p
+		add adra, adra, 1
+		sub i, i, 1
+		bgt i, 0, loop
+		
+		mov adra, #a
+		out (adra), n
+		
+		stop
+		
+		
+		
+am:		mul t, (adra), (adra)
+		mov j, (adra)
+		mov p, 1
+
+loop1:	div j, j, 10
+		mul p, p, 10
+		bgt j, 0, loop1
+		
+		div j, t, p
+		mul j, j, p
+		sub j, t, j
+		
+		mov p, 1
+		beq j, (adra), end
+		mov p, 0
+
+end:	rts
