@@ -1,8 +1,7 @@
-﻿		n = 1
+		n = 1
 		m = 2
 		adra = 3
 		adrb = 4
-		i = 5
 		res = 6
 		a = 1000
 		b = 2000
@@ -15,35 +14,33 @@
 		mov adrb, #b
 		in (adra), n
 		in (adrb), m
-		mov i, n
+		beq m, n, loop
+		mov res, 2
+		out res
+		stop
 		
-loop:	jsr am
-		mov (adra), p
-		add adra, adra, 1
-		sub i, i, 1
-		bgt i, 0, loop
 		
-		mov adra, #a
-		out (adra), n
+loop:	jsr inv
+		out res
 		
 		stop
 		
 		
 		
-am:		mul t, (adra), (adra)
-		mov j, (adra)
-		mov p, 1
-
-loop1:	div j, j, 10
-		mul p, p, 10
-		bgt j, 0, loop1
+inv:	mov adra, #a
+		add adrb, #b, m
+		sub adrb, adrb, 1
 		
-		div j, t, p
-		mul j, j, p
-		sub j, t, j
+loop1:	beq (adra), (adrb), jmp
+		beq n, n, jmp1
+jmp:	add adra, adra, 1
+		sub adrb, adrb, 1
+		sub n, n, 1
+		bgt n, 0, loop1
 		
-		mov p, 1
-		beq j, (adra), end
-		mov p, 0
+		mov res, 1
+		beq n, n, end
+		
+jmp1:	mov res, 0
 
 end:	rts
