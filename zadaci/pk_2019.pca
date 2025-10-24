@@ -1,0 +1,34 @@
+﻿		n = 1
+		adra = 2
+		i = 3
+		p = 4
+		t = 5
+		a = 100
+		
+		ORG 8 
+		
+		in n
+		mov adra, #a
+		in (adra), n
+		mov i, n
+		
+loop:	jsr pp
+		mov (adra), p
+		sub i, i, 1
+		bgt i, 0, loop
+		
+		mov adra, #a
+		out (adra), n
+		
+		stop
+		
+pp:		mov p, 1
+
+loop1:	div t, (adra), 10
+		mul t, t, 10
+		sub t, (adra), t
+		mul p, p, t
+		div (adra), (adra), 10
+		bgt (adra), 0, loop1
+		
+		rts
