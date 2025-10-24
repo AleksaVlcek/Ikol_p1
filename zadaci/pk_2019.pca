@@ -1,4 +1,4 @@
-﻿		n = 1
+		n = 1
 		adra = 2
 		i = 3
 		p = 4
@@ -14,6 +14,7 @@
 		
 loop:	jsr pp
 		mov (adra), p
+		add adra, adra, 1
 		sub i, i, 1
 		bgt i, 0, loop
 		
